@@ -12,7 +12,7 @@ export LANG=${LANG:-en_US.UTF-8}
 
 export BUILDPACK_DIR=`dirname $(readlink -f ${BASH_SOURCE%/*})`
 source "$BUILDPACK_DIR/scripts/install_go.sh"
-output_dir=$(mktemp -d -t supplyXXX --tmpdir=/dev)
+output_dir=$(mktemp -d -t supplyXXX --tmpdir=/app)
 
 
 echo "-----> Running go build supply"
