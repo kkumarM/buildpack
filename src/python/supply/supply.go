@@ -386,7 +386,7 @@ func (s *Supplier) InstallPipEnv() error {
 		s.Log.Info("Installing %s", dep)
 		out := &bytes.Buffer{}
 		stderr := &bytes.Buffer{}
-		if err := s.Command.Execute(s.Stager.BuildDir(), out, stderr, "python", "-m", "pip", "install", dep, "--exists-action=w", "--no-index", fmt.Sprintf("--find-links=%s", filepath.Join("/tmp", "pipenv"))); err != nil {
+		if err := s.Command.Execute(s.Stager.BuildDir(), out, stderr, "python", "-m", "pip", "install", dep, "--exists-action=w", "--no-index", fmt.Sprintf("--find-links=%s", filepath.Join("/", "pipenv"))); err != nil {
 			return fmt.Errorf("Failed to install %s: %v.\nStdout: %v\nStderr: %v", dep, err, out, stderr)
 		}
 	}
@@ -610,7 +610,7 @@ func (s *Supplier) RunPipUnvendored() error {
 		return err
 	}
 
-	installArgs := []string{"-m", "pip", "install", "-r", requirementsPath, "--ignore-installed", "--exists-action=w", "--src=" + filepath.Join(s.Stager.DepDir(), "src")}
+	installArgs := []string{"-m", "pip", "install", "-r", requirementsPath, "-d ", "/app"  ,"--ignore-installed", "--exists-action=w", "--src=" + filepath.Join(s.Stager.DepDir(), "src")}
 	if err := s.Command.Execute(s.Stager.BuildDir(), indentWriter(os.Stdout), indentWriter(os.Stderr), "python", installArgs...); err != nil {
 		return fmt.Errorf("could not run pip: %v", err)
 	}
