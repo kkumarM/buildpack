@@ -610,7 +610,8 @@ func (s *Supplier) RunPipUnvendored() error {
 		return err
 	}
 
-	installArgs := []string{"-m", "pip", "install", "-r", requirementsPath, "-d ", "/app"  ,"--ignore-installed", "--exists-action=w", "--src=" + filepath.Join(s.Stager.DepDir(), "src")}
+	installArgs := []string{"-m", "pip", "install", "-r", requirementsPath, "--ignore-installed", "--exists-action=w", "--src=" + filepath.Join(s.Stager.DepDir(), "src")}
+	fmt.Println("Stager Path:", filepath.Join(s.Stager.DepDir(), "src"))
 	if err := s.Command.Execute(s.Stager.BuildDir(), indentWriter(os.Stdout), indentWriter(os.Stderr), "python", installArgs...); err != nil {
 		return fmt.Errorf("could not run pip: %v", err)
 	}
